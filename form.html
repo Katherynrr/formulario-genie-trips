@@ -61,6 +61,12 @@
     .logo img {
       max-width: 200px;
     }
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -71,10 +77,9 @@
 
     <h2>Contact Form</h2>
 
-    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
-    <input type="hidden" name="oid" value="00DgL000003rdBB">
-    <input type="hidden" name="retURL" value="https://katherynrr.github.io/formulario-genie-trips/thanks.html">
-
+    <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" novalidate>
+      <input type="hidden" name="oid" value="00DgL000003rdBB">
+      <input type="hidden" name="retURL" value="https://katherynrr.github.io/formulario-genie-trips/thanks.html">
 
       <label for="first_name">First Name</label>
       <input id="first_name" name="first_name" maxlength="40" type="text" required>
@@ -92,7 +97,8 @@
       <input id="00NgL00000zDChl" name="00NgL00000zDChl" maxlength="255" type="text" required>
 
       <label for="company">Company</label>
-      <input id="company" name="company" maxlength="40" type="text" required>
+      <input id="company" name="company" maxlength="40" type="text">
+      <div id="companyError" class="error-message">Company is required if Customer Type is Company.</div>
 
       <label for="country">Country</label>
       <input id="country" name="country" maxlength="40" type="text" required>
@@ -122,5 +128,26 @@
       <input class="submit-btn" type="submit" name="submit" value="Submit">
     </form>
   </div>
+
+  <script>
+    const form = document.getElementById('leadForm');
+    const customerTypeSelect = document.getElementById('00NgL00000zCktZ');
+    const companyInput = document.getElementById('company');
+    const companyError = document.getElementById('companyError');
+
+    form.addEventListener('submit', function(event) {
+      companyError.style.display = 'none';  // reset error message
+      const customerType = customerTypeSelect.value;
+      const companyValue = companyInput.value.trim();
+
+      if (customerType === 'Company' && companyValue === '') {
+        event.preventDefault(); // Prevent form submission
+        companyError.style.display = 'block';
+        companyInput.focus();
+        return false;
+      }
+      // If Customer Type is Person, company can be empty - no problem
+    });
+  </script>
 </body>
 </html>
