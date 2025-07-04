@@ -101,15 +101,73 @@
       <input id="company" name="company" maxlength="40" type="text">
       <div id="companyError" class="error-message">Company is required if Customer Type is Company.</div>
 
-      <label for="country">Country</label>
-      <input id="country" name="country" maxlength="40" type="text" required>
+     <label for="country">Country</label>
+      <select id="country" name="country" required>
+        <option value="">--Select a Country--</option>
+        
+        <!-- Estados Unidos -->
+        <option value="United States">United States</option>
+        
+        <!-- Latinoamérica -->
+        <option value="Argentina">Argentina</option>
+        <option value="Brazil">Brazil</option>
+        <option value="Chile">Chile</option>
+        <option value="Colombia">Colombia</option>
+        <option value="Costa Rica">Costa Rica</option>
+        <option value="Cuba">Cuba</option>
+        <option value="Dominican Republic">Dominican Republic</option>
+        <option value="Ecuador">Ecuador</option>
+        <option value="El Salvador">El Salvador</option>
+        <option value="Guatemala">Guatemala</option>
+        <option value="Honduras">Honduras</option>
+        <option value="Mexico">Mexico</option>
+        <option value="Nicaragua">Nicaragua</option>
+        <option value="Panama">Panama</option>
+        <option value="Paraguay">Paraguay</option>
+        <option value="Peru">Peru</option>
+        <option value="Puerto Rico">Puerto Rico</option>
+        <option value="Uruguay">Uruguay</option>
+        <option value="Venezuela, Bolivarian Republic of">Venezuela, Bolivarian Republic of</option>
+        
+        <!-- Europa -->
+        <option value="Austria">Austria</option>
+        <option value="Belgium">Belgium</option>
+        <option value="Croatia">Croatia</option>
+        <option value="Czechia">Czechia</option>
+        <option value="Denmark">Denmark</option>
+        <option value="Finland">Finland</option>
+        <option value="France">France</option>
+        <option value="Germany">Germany</option>
+        <option value="Greece">Greece</option>
+        <option value="Hungary">Hungary</option>
+        <option value="Ireland">Ireland</option>
+        <option value="Italy">Italy</option>
+        <option value="Netherlands">Netherlands</option>
+        <option value="Norway">Norway</option>
+        <option value="Poland">Poland</option>
+        <option value="Portugal">Portugal</option>
+        <option value="Spain">Spain</option>
+        <option value="Sweden">Sweden</option>
+        <option value="Switzerland">Switzerland</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="Ukraine">Ukraine</option>
+      </select>
 
+
+     <label for="00NgL00000zCktZ">Customer Type</label>
+      <select id="00NgL00000zCktZ" name="Customer_Type__c" required>
+        <option value="">--None--</option>
+        <option value="Company">Company</option>
+        <option value="Person">Person</option>
+      </select>
+     
+     <!--
       <label for="00NgL00000zCktZ">Customer Type</label>
       <select id="00NgL00000zCktZ" name="00NgL00000zCktZ" required>
         <option value="">--None--</option>
         <option value="Company">Company</option>
         <option value="Person">Person</option>
-      </select>
+      </select> -->
 
       <label>
         <input id="00NgL00000zCqR7" name="00NgL00000zCqR7" type="checkbox" value="1">
