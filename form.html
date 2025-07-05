@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Genie Trips Lead Form</title>
+  
+  <!-- 🎨 ESTILOS DEL FORMULARIO -->
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #e0f7f5;
       padding: 30px;
     }
+
     .form-container {
       background-color: white;
       border-radius: 10px;
@@ -17,15 +20,18 @@
       padding: 30px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
+
     .form-container h2 {
       text-align: center;
       color: #008b8b;
     }
+
     label {
       display: block;
       margin-top: 15px;
       font-weight: bold;
     }
+
     input[type="text"],
     input[type="email"],
     input[type="tel"],
@@ -37,9 +43,11 @@
       border: 1px solid #ccc;
       border-radius: 6px;
     }
+
     input[type="checkbox"] {
       margin-right: 5px;
     }
+
     .submit-btn {
       margin-top: 20px;
       width: 100%;
@@ -51,36 +59,52 @@
       font-size: 16px;
       cursor: pointer;
     }
+
     .submit-btn:hover {
       background-color: #1aa9a9;
     }
+
     .logo {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .logo img {
       max-width: 200px;
     }
+
     .error-message {
       color: red;
       font-size: 14px;
       margin-top: 5px;
       display: none;
     }
+
+    /* 💡 Estilo visual para campos desactivados */
+    input[disabled] {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
+
 <body>
   <div class="form-container">
+
+    <!-- 🌟 LOGO DE LA AGENCIA -->
     <div class="logo">
       <img src="1GenieTripscopia.jpg" alt="Genie Trips Logo">
     </div>
 
     <h2>Contact Form</h2>
 
-   <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+    <!-- 📝 FORMULARIO PRINCIPAL -->
+    <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+      <!-- Campos ocultos de configuración -->
       <input type="hidden" name="oid" value="00DgL000003rdBB">
       <input type="hidden" name="retURL" value="https://katherynrr.github.io/formulario-genie-trips/thanks.html">
       <input type="hidden" name="lead_source" value="Web Form - Genie Trips">
+
+      <!-- Campos visibles -->
 
       <label for="first_name">First Name</label>
       <input id="first_name" name="first_name" maxlength="40" type="text" required>
@@ -97,17 +121,26 @@
       <label for="00NgL00000zDChl">Id or Passport</label>
       <input id="00NgL00000zDChl" name="00NgL00000zDChl" maxlength="255" type="text" required>
 
+      <!-- CUSTOMER TYPE: Person o Company -->
+      <label for="00NgL00000zCktZ">Customer Type</label>
+      <select id="00NgL00000zCktZ" name="Customer_Type__c" required>
+        <option value="">--None--</option>
+        <option value="Company">Company</option>
+        <option value="Person">Person</option>
+      </select>
+
+      <!-- COMPANY (requerido solo si es Company) -->
       <label for="company">Company</label>
       <input id="company" name="company" maxlength="40" type="text">
       <div id="companyError" class="error-message">Company is required if Customer Type is Company.</div>
+      <div id="personCompanyError" class="error-message">Company must be empty if Customer Type is Person.</div>
 
-     <label for="country">Country</label>
+      <!-- COUNTRY -->
+      <label for="country">Country</label>
       <select id="country" name="country" required>
         <option value="">--Select a Country--</option>
-        
         <!-- Estados Unidos -->
         <option value="United States">United States</option>
-        
         <!-- Latinoamérica -->
         <option value="Argentina">Argentina</option>
         <option value="Brazil">Brazil</option>
@@ -128,7 +161,6 @@
         <option value="Puerto Rico">Puerto Rico</option>
         <option value="Uruguay">Uruguay</option>
         <option value="Venezuela, Bolivarian Republic of">Venezuela, Bolivarian Republic of</option>
-        
         <!-- Europa -->
         <option value="Austria">Austria</option>
         <option value="Belgium">Belgium</option>
@@ -153,22 +185,7 @@
         <option value="Ukraine">Ukraine</option>
       </select>
 
-
-     <label for="00NgL00000zCktZ">Customer Type</label>
-      <select id="00NgL00000zCktZ" name="Customer_Type__c" required>
-        <option value="">--None--</option>
-        <option value="Company">Company</option>
-        <option value="Person">Person</option>
-      </select>
-     
-     <!--
-      <label for="00NgL00000zCktZ">Customer Type</label>
-      <select id="00NgL00000zCktZ" name="00NgL00000zCktZ" required>
-        <option value="">--None--</option>
-        <option value="Company">Company</option>
-        <option value="Person">Person</option>
-      </select> -->
-
+      <!-- Intereses -->
       <label>
         <input id="00NgL00000zCqR7" name="00NgL00000zCqR7" type="checkbox" value="1">
         Interested in Tickets
@@ -184,28 +201,59 @@
         Interested in Tours
       </label>
 
+      <!-- BOTÓN ENVIAR -->
       <input class="submit-btn" type="submit" name="submit" value="Submit">
     </form>
   </div>
 
+  <!-- ⚙️ VALIDACIÓN CON JAVASCRIPT -->
   <script>
     const form = document.getElementById('leadForm');
     const customerTypeSelect = document.getElementById('00NgL00000zCktZ');
     const companyInput = document.getElementById('company');
     const companyError = document.getElementById('companyError');
+    const personCompanyError = document.getElementById('personCompanyError');
 
+    // Validación al enviar el formulario
     form.addEventListener('submit', function(event) {
-      companyError.style.display = 'none';  // reset error message
+      companyError.style.display = 'none';
+      personCompanyError.style.display = 'none';
+
       const customerType = customerTypeSelect.value;
       const companyValue = companyInput.value.trim();
 
+      // Si selecciona Company y no llena el campo
       if (customerType === 'Company' && companyValue === '') {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
         companyError.style.display = 'block';
         companyInput.focus();
         return false;
       }
-      // If Customer Type is Person, company can be empty - no problem
+
+      // Si selecciona Person y escribe algo en Company
+      if (customerType === 'Person' && companyValue !== '') {
+        event.preventDefault();
+        personCompanyError.style.display = 'block';
+        companyInput.focus();
+        return false;
+      }
+    });
+
+    // Desactiva o activa el campo Company automáticamente según el Customer Type
+    customerTypeSelect.addEventListener('change', function () {
+      const customerType = this.value;
+      if (customerType === 'Person') {
+        companyInput.value = '';
+        companyInput.disabled = true;
+      } else {
+        companyInput.disabled = false;
+      }
+    });
+
+    // Al cargar la página, se asegura que el campo esté correcto según selección actual
+    window.addEventListener('DOMContentLoaded', function () {
+      const event = new Event('change');
+      customerTypeSelect.dispatchEvent(event);
     });
   </script>
 </body>
